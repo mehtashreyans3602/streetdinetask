@@ -1,4 +1,3 @@
-// redux/reducers/user.js
 import { createSlice } from '@reduxjs/toolkit';
 
 export const userSlice = createSlice({

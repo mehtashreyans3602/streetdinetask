@@ -4,7 +4,6 @@ import GoogleProvider from "next-auth/providers/google";
 import { getSession } from 'next-auth/react';
 import { store,setUserId } from "@/redux/store";
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,

@@ -26,7 +26,7 @@ const Header = () => {
 	}, [dispatch, session]);
 
 	const handleSignIn = () => {
-		signIn(); // Replace 'github' with the appropriate provider
+		signIn();
 	};
 
 	const handleSignOut = () => {
