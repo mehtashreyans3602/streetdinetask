@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   const darkMode = useSelector((state)=>state.darkMode.darkMode)
   return (
-    <div className={`${darkMode ? ('text-white bg-black'):('text-black bg-white')} h-screen`}>
+    <div className={`${darkMode ? ('text-white bg-black'):('text-black bg-white')} h-screen w-full`}>
     <Header/>
     </div>
   )
