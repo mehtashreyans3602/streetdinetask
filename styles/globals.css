@@ -111,3 +111,7 @@
   transform: scaleX(1);
   transform-origin: left center;
 }
+
+::-webkit-scrollbar{
+  display: none;
+}
