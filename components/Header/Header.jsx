@@ -1,18 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { toggleDarkMode } from '@/redux/reducers/darkModeReducer';
 import { selectUser, setUser, clearUser } from '@/redux/reducers/userReducer';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import Link from 'next/link';
 import Image from 'next/image';
 import spacexWhite from '@/assets/Spacexwhite.svg';
+import spacexBlack from '@/assets/Spacexblack.svg';
+import { Toggle } from '../ui/toggle';
+import { SunIcon } from 'lucide-react';
 const Header = () => {
 	const dispatch = useDispatch();
 	const { data: session } = useSession();
 	const user = useSelector(selectUser);
-
+	const darkMode = useSelector((state) => state.darkMode.darkMode);
 	useEffect(() => {
 		if (session && session.user) {
 			dispatch(setUser(session.user));
@@ -28,18 +32,30 @@ const Header = () => {
 	const handleSignOut = () => {
 		signOut();
 	};
-
+	const handleDarkMode = () => {
+		dispatch(toggleDarkMode());
+	  };
 	return (
-		<header className='sticky w-full'>
+		<header className={`${darkMode === true? ('text-white bg-black') : ('text-black bg-white') } sticky w-full`}>
 			<nav className='flex items-center justify-between py-4 px-10'>
 				<div className='logo' style={{ width: '210px', height: 'auto' }}>
 					<Link href={'/'}>
-						<Image
+						{darkMode? 
+						(
+							<Image
 							src={spacexWhite}
 							alt='spacexLogo'
 							className='object-contain'
 							style={{ width: '100%', height: 'auto' }}
 						/>
+						):(
+							<Image
+							src={spacexBlack}
+							alt='spacexLogo'
+							className='object-contain'
+							style={{ width: '100%', height: 'auto' }}
+						/>
+						)}
 					</Link>
 				</div>
 
@@ -56,7 +72,7 @@ const Header = () => {
 										alt='User'
 									/>
 								</HoverCardTrigger>
-								<HoverCardContent className='bg-black text-white'>
+								<HoverCardContent className={`${darkMode? ('text-white bg-black'):('text-black bg-white')}`}>
 									<div className='flex flex-col w-full h-full items-center gap-2 justify-center'>
 										<Image
 											height={40}
@@ -79,10 +95,13 @@ const Header = () => {
 								</HoverCardContent>
 							</HoverCard>
 						) : (
-							<button className='border-animation' onClick={handleSignIn}>
+							<button className={` ${darkMode? ('text-white bg-black'):('text-black bg-white')}`} onClick={handleSignIn}>
 								Sign In
 							</button>
 						)}
+					</li>
+					<li>
+						<Toggle onClick={handleDarkMode} className={`${darkMode? ('text-white bg-black'):('text-black bg-white')}`}><SunIcon></SunIcon></Toggle>
 					</li>
 				</ul>
 			</nav>
